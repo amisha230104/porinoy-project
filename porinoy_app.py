@@ -480,7 +480,7 @@ def show_img(path, height=280, fit="cover", object_position="center top"):
 
 # ── Backend ────────────────────────────────────────────────────────────────
 MISTRAL_API_KEY   = "MISTRAL_API_KEY"
-DEFAULT_JSON_PATH = r"C:/Users/chait/OneDrive/Desktop/Code/Porinoy/matrimonial_ads_cleaned.json"
+DEFAULT_JSON_PATH = os.path.join(APP_DIR, 'matrimonial_ads_cleaned.json')
 ONTOLOGY_IRI      = "http://matrimonial-nlp-research.org/ontology#"
 
 SPARQL_PREFIX = f"""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
