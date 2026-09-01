@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PORINOY</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root {
+  --paper:#EDE7D9;--paper-deep:#E3DCC9;--ink:#1C1B19;--ink-soft:#423F38;
+  --rule:#8B8576;--rule-light:#C9C2AC;--accent:#A13D2B;--accent-soft:#C9744F;
+  --green:#5B6B4E;--card:#F6F2E8;
+  --display:'Source Serif 4',serif;--body:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.5;background-image:radial-gradient(circle at 20% 30%,rgba(0,0,0,0.018) 0,transparent 35%),radial-gradient(circle at 80% 70%,rgba(0,0,0,0.018) 0,transparent 35%),repeating-linear-gradient(0deg,rgba(0,0,0,0.012) 0px,transparent 1px,transparent 2px);}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor;}
+a:hover{color:var(--ink);}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px;position:relative;z-index:1;}
+@media(max-width:700px){.wrap{padding:0 18px;}}
+.masthead{border-bottom:3px solid var(--ink);padding:18px 0 12px;}
+.masthead .wrap{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.masthead-left{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-soft);}
+.masthead-right{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--ink-soft);text-align:right;}
+.masthead-right a{border-bottom:none;color:var(--ink-soft);}
+.masthead-right a:hover{color:var(--accent);}
+.expansion{font-family:var(--display);font-size:clamp(18px,2vw,28px);font-weight:400;color:var(--ink-soft);line-height:1.5;margin-bottom:18px;max-width:900px;}
+.acronym-letter{color:var(--accent);font-weight:700;}
+.hero{padding:64px 0 56px;border-bottom:1px solid var(--rule-light);}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--green);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.kicker::before{content:"";width:22px;height:1px;background:var(--green);display:inline-block;}
+h1.title{font-family:var(--display);font-weight:700;font-size:clamp(32px,5vw,60px);line-height:1.05;margin:0 0 8px;letter-spacing:-0.01em;}
+.subtitle{font-family:var(--display);font-size:clamp(17px,2.2vw,22px);color:var(--ink-soft);max-width:700px;margin:18px 0 30px;font-weight:400;font-style:italic;}
+.hero-meta{display:flex;flex-wrap:wrap;gap:28px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);margin-bottom:34px;}
+.hero-meta span b{color:var(--ink);font-weight:600;}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--body);font-weight:600;font-size:14px;padding:12px 22px;border:1.5px solid var(--ink);border-radius:2px;background:transparent;color:var(--ink);cursor:pointer;transition:all 0.15s ease;display:inline-flex;align-items:center;gap:8px;text-decoration:none;border-bottom-width:1.5px;}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper);}
+.btn.primary:hover{background:var(--ink);border-color:var(--ink);color:var(--paper);}
+.btn:not(.primary):hover{background:var(--ink);color:var(--paper);}
+.sec{padding:56px 0;border-bottom:1px solid var(--rule-light);}
+.sec-label{font-family:var(--mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+.sec-label.g{color:var(--green);}
+.sec-heading{font-family:var(--display);font-weight:600;font-size:clamp(24px,3vw,36px);margin:0 0 14px;}
+.sec-intro{color:var(--ink-soft);max-width:680px;font-size:15.5px;line-height:1.75;}
+.obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px;}
+@media(max-width:700px){.obj-grid{grid-template-columns:1fr;}}
+.obj-card{background:var(--card);border:1px solid var(--rule-light);border-left:3px solid var(--accent);padding:26px 24px;}
+.obj-num{font-family:var(--mono);font-size:28px;color:var(--rule-light);font-weight:600;line-height:1;margin-bottom:12px;}
+.obj-text{font-size:15px;color:var(--ink-soft);line-height:1.75;}
+.phase-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px;}
+@media(max-width:700px){.phase-cards{grid-template-columns:1fr;}}
+.phase-card{background:var(--card);border:1px solid var(--ink);padding:28px 26px;position:relative;}
+.phase-card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);}
+.phase-card.p2::after{background:var(--green);}
+.phase-tag{font-family:var(--mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px;}
+.phase-card.p2 .phase-tag{color:var(--green);}
+.phase-name{font-family:var(--display);font-size:22px;font-weight:600;margin-bottom:10px;}
+.phase-desc{font-size:14.5px;color:var(--ink-soft);line-height:1.75;}
+.approach-sec{padding:56px 0;border-bottom:1px solid var(--rule-light);}
+.tab-nav{display:flex;border-bottom:2px solid var(--ink);margin-top:28px;margin-bottom:0;}
+.tab-btn{font-family:var(--mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:14px 28px;background:var(--paper-deep);border:none;border-right:1px solid var(--rule-light);cursor:pointer;color:var(--ink-soft);transition:all 0.15s;border-bottom:none;position:relative;top:2px;}
+.tab-btn:last-child{border-right:none;}
+.tab-btn.active{background:var(--card);color:var(--ink);border-top:2px solid var(--accent);font-weight:600;}
+.tab-btn.p2.active{border-top-color:var(--green);}
+.tab-btn:not(.active):hover{background:var(--rule-light);color:var(--ink);}
+.tab-panel{display:none;background:var(--card);border:1px solid var(--ink);border-top:none;}
+.tab-panel.active{display:block;}
+.scrubber{background:var(--card);}
+.scrubber-display{position:relative;height:300px;overflow:hidden;border-bottom:1px solid var(--rule-light);}
+.era-panel{position:absolute;inset:0;padding:24px 28px;opacity:0;transition:opacity 0.3s ease;display:flex;flex-direction:column;justify-content:center;}
+.era-panel.active{opacity:1;}
+.era-mock{display:flex;gap:14px;align-items:stretch;height:170px;margin-bottom:14px;}
+.era-img{flex:1;height:100%;width:50%;object-fit:contain;border:1.5px solid var(--ink);background:var(--paper);}
+.era-caption{font-family:var(--body);font-size:13.5px;color:var(--ink-soft);max-width:560px;}
+.era-caption b{color:var(--ink);}
+.scrubber-controls{display:flex;}
+.era-btn{flex:1;font-family:var(--mono);font-size:12px;padding:14px 6px;text-align:center;background:var(--paper-deep);border:none;border-right:1px solid var(--ink);cursor:pointer;color:var(--ink-soft);transition:all 0.15s;}
+.era-btn:last-child{border-right:none;}
+.era-btn .yr{display:block;font-size:16px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.era-btn .lbl{font-size:9px;text-transform:uppercase;letter-spacing:0.06em;}
+.era-btn.active{background:var(--accent);color:var(--paper);}
+.era-btn.active .yr{color:var(--paper);}
+.era-btn:not(.active):hover{background:var(--rule-light);}
+.p1-body{padding:28px;}
+.p1-two-col{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:36px;}
+@media(max-width:700px){.p1-two-col{grid-template-columns:1fr;}}
+.p1-two-col p{font-size:15px;color:var(--ink-soft);line-height:1.75;margin-bottom:14px;}
+.p1-two-col p strong{color:var(--ink);}
+.sub-label{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--ink);margin-top:16px;}
+@media(max-width:700px){.step-grid{grid-template-columns:1fr;}}
+.step{padding:24px 22px;border-right:1px solid var(--rule-light);background:var(--paper);}
+.step:last-child{border-right:none;}
+.step-num{font-family:var(--mono);font-size:30px;color:var(--rule-light);font-weight:600;line-height:1;margin-bottom:12px;}
+.step h3{font-family:var(--display);font-size:18px;margin:0 0 8px;font-weight:600;}
+.step p{font-size:13.5px;color:var(--ink-soft);margin:0;line-height:1.7;}
+.step .tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--green);border:1px solid var(--green);padding:2px 7px;margin-top:12px;text-transform:uppercase;letter-spacing:0.04em;}
+.p2-body{padding:28px;}
+.p2-metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule-light);border:1px solid var(--ink);margin-bottom:28px;}
+@media(max-width:700px){.p2-metrics{grid-template-columns:repeat(2,1fr);}}
+.metric-cell{background:var(--paper);padding:20px 14px;text-align:center;}
+.metric-num{font-family:var(--mono);font-size:clamp(20px,2.4vw,28px);font-weight:600;color:var(--accent);display:block;margin-bottom:4px;}
+.metric-num.g{color:var(--green);}
+.metric-lbl{font-family:var(--body);font-size:11.5px;color:var(--ink-soft);}
+.metric-sub{font-family:var(--mono);font-size:9.5px;color:var(--rule);margin-top:2px;}
+.p2-two-col{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+@media(max-width:700px){.p2-two-col{grid-template-columns:1fr;}}
+.method-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px;}
+.method-table tr{border-bottom:1px solid var(--rule-light);}
+.method-table tr:last-child{border-bottom:none;}
+.method-table td{padding:10px 12px;}
+.method-table td:first-child{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;}
+.tag-rule{display:inline-block;background:var(--paper);color:var(--green);border:1px solid var(--green);padding:1px 6px;font-size:9.5px;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;margin-right:4px;border-radius:1px;}
+.tag-llm{display:inline-block;background:var(--paper);color:var(--accent);border:1px solid var(--accent);padding:1px 6px;font-size:9.5px;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;margin-right:4px;border-radius:1px;}
+.schema-block{background:var(--ink);color:var(--paper);padding:22px 24px;font-family:var(--mono);font-size:12px;line-height:1.8;border-radius:2px;}
+.schema-block .sh{color:var(--accent-soft);font-weight:600;}
+.schema-block .sk{color:var(--rule-light);}
+.schema-block .sv{opacity:0.75;}
+.sparql-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule-light);margin-top:14px;}
+@media(max-width:700px){.sparql-grid{grid-template-columns:1fr;}}
+.sparql-query{padding:16px 18px;border-right:1px solid var(--rule-light);font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);line-height:1.6;}
+.sparql-query:last-child{border-right:none;}
+.q-num{font-size:9.5px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:4px;}
+.q-title{color:var(--ink);font-size:12px;font-weight:600;display:block;margin-bottom:6px;}
+.q-desc{font-size:11px;color:var(--ink-soft);}
+.deliverables-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--ink);margin-top:24px;}
+@media(max-width:700px){.deliverables-grid{grid-template-columns:1fr;}}
+.del-card{padding:26px 22px;border-right:1px solid var(--rule-light);background:var(--card);}
+.del-card:last-child{border-right:none;}
+.del-num{font-family:var(--mono);font-size:28px;color:var(--rule-light);font-weight:600;line-height:1;margin-bottom:12px;}
+.del-title{font-family:var(--display);font-size:17px;font-weight:600;margin-bottom:8px;}
+.del-desc{font-size:14px;color:var(--ink-soft);line-height:1.7;}
+.pi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--ink);margin-top:24px;}
+@media(max-width:700px){.pi-grid{grid-template-columns:1fr;}}
+.pi-card{padding:28px 22px;border-right:1px solid var(--rule-light);background:var(--card);}
+.pi-card:last-child{border-right:none;}
+@media(max-width:700px){.pi-card{border-right:none;border-bottom:1px solid var(--rule-light);}.pi-card:last-child{border-bottom:none;}}
+.pi-name{font-family:var(--display);font-size:18px;font-weight:600;margin-bottom:4px;line-height:1.3;}
+.pi-role{font-family:var(--mono);font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;font-weight:600;}
+.pi-inst{font-size:13px;color:var(--ink-soft);line-height:1.55;font-style:italic;}
+.pi-photo{width:100%;height:280px;object-fit:cover;object-position:center top;display:block;margin-bottom:16px;border:1px solid var(--rule-light);}
+.contact-block{margin-top:24px;border:1px solid var(--rule-light);background:var(--card);padding:28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.contact-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.contact-label{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--rule);display:block;margin-bottom:4px;font-weight:600;}
+.contact-email{font-family:var(--mono);font-size:17px;font-weight:600;color:var(--green);border-bottom:none;}
+.contact-email:hover{color:var(--accent);}
+.footer{border-top:3px solid var(--ink);padding:28px 0 36px;margin-top:0;}
+.footer-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
+.footer-row a{color:var(--ink-soft);border-bottom:1px solid var(--rule-light);}
+.footer-row a:hover{color:var(--accent);}
+
+/* ── Phase II Gallery: uniform 3 rows x 2 columns ── */
+.p2-gallery-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:700px){.p2-gallery-grid{grid-template-columns:1fr;}}
+.p2-gallery-grid figure{margin:0;border:1px solid var(--rule-light);background:var(--paper);display:flex;flex-direction:column;}
+.p2-fig-header{padding:9px 14px;border-bottom:1px solid var(--rule-light);background:var(--card);display:flex;align-items:center;gap:8px;flex-shrink:0;}
+/* Uniform height image area for all 6 cells */
+.p2-img-wrap{width:100%;height:260px;overflow:hidden;background:var(--paper-deep);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.p2-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;}
+.p2-img-wrap svg{width:100%;height:100%;}
+.p2-figcaption{padding:9px 14px;font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);line-height:1.6;flex-shrink:0;}
+
+@media(prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important;}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead-left">PORINOY</div>
+    <div class="masthead-right">
+      <a href="#approach">Methodology</a> &nbsp;&middot;&nbsp;
+      <a href="#team">Team</a> &nbsp;&middot;&nbsp;
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Research Project under the Jaya Prakash Narayan National Centre of Excellence in Humanities, IIT Indore</p>
+    <h1 class="title">PORINOY</h1>
+    <h2 class="expansion">
+      <span class="acronym-letter">P</span>roducing
+      <span class="acronym-letter">O</span>ntologies of
+      <span class="acronym-letter">R</span>elationships from
+      <span class="acronym-letter">I</span>ndian
+      <span class="acronym-letter">N</span>uptial
+      d<span class="acronym-letter">O</span>cuments
+      longitudinall<span class="acronym-letter">Y</span>
+    </h2>
+    <p class="subtitle">A Case Study of Bengali / Bangla Wedding Invitations</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#approach">Explore the Project &rarr;</a>
+      <a class="btn" href="#contact">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="sec-label">Objectives</p>
+    <h2 class="sec-heading">What this research sets out to do</h2>
+    <p class="sec-intro">Collecting, analysing, and computing over Bengali/Bangla matrimonial documents to trace socio-cultural transitions in Bengal from &ldquo;tradition&rdquo; to &ldquo;modernity.&rdquo;</p>
+    <div class="obj-grid">
+      <div class="obj-card"><div class="obj-num">I</div><p class="obj-text">Collecting, digitising, and analysing Bengali/Bangla matrimonial documents as vehicles of socio-cultural transitions in Bengal from &ldquo;tradition&rdquo; to &ldquo;modernity&rdquo; through systematic archival and computational methods.</p></div>
+      <div class="obj-card"><div class="obj-num">II</div><p class="obj-text">Examining changing discourses of Bengali weddings and marriage practices, and of the networks of relationships they have influenced and inflected, as indicators of broader societal transitions.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="sec-label">Methodology</p>
+    <h2 class="sec-heading">A two-phase approach</h2>
+    <p class="sec-intro">The project involves multidisciplinary methods to comprehensively investigate the dynamics of Bengali wedding documents.</p>
+    <div class="phase-cards">
+      <div class="phase-card p1"><p class="phase-tag">Phase I</p><p class="phase-name">Dataset Creation</p><p class="phase-desc">Intensive archival research, collection of analogue and digital documents, OCR digitisation, and creation of a comprehensive annotated dataset of Bengali matrimonial advertisements spanning four decades (1984&ndash;2024).</p></div>
+      <div class="phase-card p2"><p class="phase-tag">Phase II</p><p class="phase-name">Domain-Specific Analysis</p><p class="phase-desc">Establishing ontologies of relationships within the Bengali wedding documents, and building a comprehensive computational view of societal transitions using NLP pipelines, OWL ontologies, and SPARQL-based semantic querying.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="approach-sec" id="approach">
+  <div class="wrap">
+    <p class="sec-label">Proposed Approach</p>
+    <h2 class="sec-heading">An integrated knowledge portal</h2>
+    <p class="sec-intro">An invaluable resource offering insights into the cultural practices and transitions in Bengali wedding and marriage practices over time.</p>
+
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="phase1">Phase I &mdash; Dataset &amp; Corpus</button>
+      <button class="tab-btn p2" data-tab="phase2">Phase II &mdash; NLP, Ontology &amp; Queries</button>
+    </div>
+
+    <!-- PHASE I PANEL -->
+    <div class="tab-panel active" id="tab-phase1">
+      <div class="scrubber">
+        <div class="scrubber-display" id="eraDisplay">
+          <div class="era-panel active" data-era="1984">
+            <div class="era-mock">
+              <img src="images/newspapers/1984_1.png" alt="1984 matrimonial ad" class="era-img" onerror="this.style.background='var(--paper-deep)';this.removeAttribute('src')">
+              <img src="images/newspapers/1984_2.png" alt="1984 matrimonial ad" class="era-img" onerror="this.style.background='var(--paper-deep)';this.removeAttribute('src')">
+            </div>
+            <p class="era-caption"><b>1984 &mdash; Dense-packing era.</b> Hand-set hot-metal columns, hairline rules, near-zero whitespace between listings. Ink-bleed and paper aging are common.</p>
+          </div>
+          <div class="era-panel" data-era="1998">
+            <div class="era-mock">
+              <img src="images/newspapers/1998_1.png" alt="1998 matrimonial ad" class="era-img" onerror="this.style.background='var(--paper-deep)';this.removeAttribute('src')">
+              <img src="images/newspapers/1998_2.png" alt="1998 matrimonial ad" class="era-img" onerror="this.style.background='var(--paper-deep)';this.removeAttribute('src')">
+            </div>
+            <p class="era-caption"><b>1998 &mdash; Early phototypesetting.</b> Column counts increase as desktop publishing tools enter newsrooms.</p>
+          </div>
+          <div class="era-panel" data-era="2010">
+            <div class="era-mock">
+              <img src="images/newspapers/2010_1.png" alt="2010 matrimonial ad" class="era-img" onerror="this.style.background='var(--paper-deep)';this.removeAttribute('src')">
+              <img src="images/newspapers/2010_2.png" alt="2010 matrimonial ad" class="era-img" onerror="this.style.background='var(--paper-deep)';this.removeAttribute('src')">
+            </div>
+            <p class="era-caption"><b>2010 &mdash; Standardised grid.</b> Digital typesetting introduces consistent gutters and grid-aligned columns.</p>
+          </div>
+          <div class="era-panel" data-era="2024">
+            <div class="era-mock">
+              <img src="images/newspapers/2024_1.png" alt="2024 matrimonial ad" class="era-img" onerror="this.style.background='var(--paper-deep)';this.removeAttribute('src')">
+              <img src="images/newspapers/2024_2.png" alt="2024 matrimonial ad" class="era-img" onerror="this.style.background='var(--paper-deep)';this.removeAttribute('src')">
+            </div>
+            <p class="era-caption"><b>2024 &mdash; Digital hybrid layout.</b> Rounded card-like ad blocks, variable typography, and design flourishes appear alongside legacy column conventions.</p>
+          </div>
+        </div>
+        <div class="scrubber-controls" id="eraControls">
+          <button class="era-btn active" data-era="1984"><span class="yr">1984</span><span class="lbl">Dense-packing</span></button>
+          <button class="era-btn" data-era="1998"><span class="yr">1998</span><span class="lbl">Phototypeset</span></button>
+          <button class="era-btn" data-era="2010"><span class="yr">2010</span><span class="lbl">Grid layout</span></button>
+          <button class="era-btn" data-era="2024"><span class="yr">2024</span><span class="lbl">Digital hybrid</span></button>
+        </div>
+      </div>
+      <div class="p1-body">
+        <div class="p1-two-col">
+          <div>
+            <p class="sub-label">Sourcing &amp; Digitisation</p>
+            <p>We performed <strong>stratified sampling</strong> from six major Bengali newspapers: Ananda Bazar Patrika, Bartaman, Ei Samay, Sangbad Pratidin, Aajkaal, and Ganashakti. Physical copies were digitised at <strong>300 DPI</strong> using flatbed scanners.</p>
+            <p>Sampling was designed to maximise temporal coverage across four print-technology eras, deliberately capturing systematic variation in typesetting convention and document degradation.</p>
+          </div>
+          <div>
+            <p class="sub-label">Dataset at a glance</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule-light);border:1px solid var(--ink);">
+              <div style="background:var(--paper);padding:18px 14px;text-align:center;"><span style="font-family:var(--mono);font-size:22px;font-weight:600;color:var(--accent);display:block">40</span><span style="font-size:12px;color:var(--ink-soft);">year archive</span></div>
+              <div style="background:var(--paper);padding:18px 14px;text-align:center;"><span style="font-family:var(--mono);font-size:22px;font-weight:600;color:var(--accent);display:block">6</span><span style="font-size:12px;color:var(--ink-soft);">newspapers</span></div>
+              <div style="background:var(--paper);padding:18px 14px;text-align:center;"><span style="font-family:var(--mono);font-size:22px;font-weight:600;color:var(--accent);display:block">3</span><span style="font-size:12px;color:var(--ink-soft);">layout classes</span></div>
+              <div style="background:var(--paper);padding:18px 14px;text-align:center;"><span style="font-family:var(--mono);font-size:22px;font-weight:600;color:var(--accent);display:block">&kappa;&gt;0.85</span><span style="font-size:12px;color:var(--ink-soft);">inter-annotator</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="sub-label">Annotation Pipeline: Human in the Loop</p>
+        <div class="step-grid">
+          <div class="step"><div class="step-num">01</div><h3>Layout Segmentation</h3><p>Spatial regions annotated across three semantic classes: <em>Advertisement</em>, <em>Bride</em>, and <em>Groom</em>. Annotators held to a strict 2px boundary tolerance.</p><span class="tag">COCO JSON format</span></div>
+          <div class="step"><div class="step-num">02</div><h3>Multi-engine OCR Drafting</h3><p>A custom GUI, <strong>3-Netra</strong> (&ldquo;The Third Eye&rdquo;), generates baseline transcriptions using three OCR engines: OLM-OCR2, DeepSeek-VL, and EasyOCR, run in parallel for every cropped region.</p><span class="tag">Python &middot; custom tool</span></div>
+          <div class="step"><div class="step-num">03</div><h3>Selection &amp; Correction</h3><p>Annotators select the most accurate of the three OCR candidates and edit to ground truth. 10% of samples underwent double-blind review by independent linguists.</p><span class="tag">&kappa; &gt; 0.85 IAA</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE II PANEL -->
+    <div class="tab-panel" id="tab-phase2">
+      <div class="p2-body">
+
+        <p class="sub-label" style="margin-bottom:14px;">Pipeline Performance</p>
+        <div class="p2-metrics">
+          <div class="metric-cell"><span class="metric-num">97.6<span style="font-size:0.65em">%</span></span><span class="metric-lbl">Age F1</span><span class="metric-sub">rule-based</span></div>
+          <div class="metric-cell"><span class="metric-num">83.8<span style="font-size:0.65em">%</span></span><span class="metric-lbl">Height F1</span><span class="metric-sub">rule-based</span></div>
+          <div class="metric-cell"><span class="metric-num">58.2<span style="font-size:0.65em">%</span></span><span class="metric-lbl">Education F1</span><span class="metric-sub">LLM-assisted</span></div>
+          <div class="metric-cell"><span class="metric-num">65.5<span style="font-size:0.65em">%</span></span><span class="metric-lbl">Overall F1</span><span class="metric-sub">hybrid pipeline</span></div>
+          <div class="metric-cell"><span class="metric-num g">+21<span style="font-size:0.65em">%</span></span><span class="metric-lbl">vs baseline</span><span class="metric-sub">hybrid gain</span></div>
+        </div>
+
+        <div class="p2-two-col">
+          <div>
+            <p class="sub-label">Hybrid Extraction Pipeline</p>
+            <p style="font-size:14.5px;color:var(--ink-soft);line-height:1.75;margin-bottom:16px;">A rule-based extractor handles high-precision fields while a Mistral LLM handles fields requiring linguistic understanding. Results are merged and exported as structured JSON per advertisement.</p>
+            <table class="method-table">
+              <tr><td>Age &middot; Height &middot; Role</td><td><span class="tag-rule">RULE</span></td></tr>
+              <tr><td>Caste &middot; Box Number</td><td><span class="tag-rule">RULE</span></td></tr>
+              <tr><td>Education &middot; Profession</td><td><span class="tag-llm">LLM</span></td></tr>
+              <tr><td>Other preferences</td><td><span class="tag-llm">LLM</span></td></tr>
+            </table>
+            <p class="sub-label" style="margin-top:24px;">SPARQL Query Examples</p>
+            <div class="sparql-grid">
+              <div class="sparql-query"><span class="q-num">Query &#9312;</span><span class="q-title">All Grooms: age, caste, education</span><span class="q-desc">Returns all Groom instances with optional age, caste name and education level, ordered by age.</span></div>
+              <div class="sparql-query"><span class="q-num">Query &#9313;</span><span class="q-title">Age distribution</span><span class="q-desc">Groups all persons by age and counts instances, feeds the age distribution bar chart.</span></div>
+              <div class="sparql-query"><span class="q-num">Query &#9314;</span><span class="q-title">Grooms aged 30+</span><span class="q-desc">Filters grooms with age &ge; 30 and joins education and profession data.</span></div>
+              <div class="sparql-query" style="border-right:none;"><span class="q-num">Query &#9315;</span><span class="q-title">Caste-no-bar preferences</span><span class="q-desc">Identifies advertisers whose requirement node carries a &ldquo;no bar&rdquo; caste preference.</span></div>
+            </div>
+          </div>
+          <div>
+            <p class="sub-label">OWL Ontology Schema</p>
+            <p style="font-size:14.5px;color:var(--ink-soft);line-height:1.75;margin-bottom:16px;">Extracted entities populate an OWL ontology enabling SPARQL-based querying of socio-cultural patterns across the corpus.</p>
+            <div class="schema-block">
+<pre><span class="sh">Classes</span>
+  <span class="sk">Thing</span>  &rarr;  <span class="sv">Advertisement &middot; Person &middot; Requirement</span>
+  <span class="sk">Person</span>  &rarr;  <span class="sv">Groom &middot; Bride</span>
+
+<span class="sh">Object Properties</span>
+  <span class="sk">Advertisement</span>  &mdash;<span class="sv">advertises</span>&rarr;  <span class="sv">Person</span>
+  <span class="sk">Person</span>  &mdash;<span class="sv">seeks</span>&rarr;  <span class="sv">Person</span>
+  <span class="sk">Person</span>  &mdash;<span class="sv">hasRequirement</span>&rarr;  <span class="sv">Requirement</span>
+
+<span class="sh">Data Properties</span>
+  <span class="sk">Person</span>      <span class="sv">hasAge &middot; hasHeight</span>
+               <span class="sv">hasCasteName &middot; hasEducationLevel</span>
+               <span class="sv">hasProfession</span>
+  <span class="sk">Ad</span>          <span class="sv">hasBoxNumber</span>
+  <span class="sk">Requirement</span> <span class="sv">preferredAgeMin &middot; preferredAgeMax</span>
+               <span class="sv">preferredCaste</span></pre>
+            </div>
+            <p style="font-family:var(--mono);font-size:11px;color:var(--rule);margin-top:10px;line-height:1.5;">Serialisation: RDF/XML (.owl) &middot; Queried via rdflib SPARQL engine</p>
+          </div>
+        </div>
+
+        <!-- ── GALLERY: 3 rows x 2 columns, uniform image height ── -->
+        <div style="margin-top:36px;border-top:1px solid var(--rule-light);padding-top:28px;">
+          <p class="sub-label" style="margin-bottom:10px;">Live Research Interface &mdash; Screenshots</p>
+          <p style="font-size:14.5px;color:var(--ink-soft);line-height:1.75;margin-bottom:22px;max-width:760px;">The following screenshots show the fully working Streamlit research interface built for Phase II, integrating OCR preprocessing, hybrid NLP extraction, OWL ontology population, interactive knowledge graph visualisation, and SPARQL querying in a single end-to-end pipeline.</p>
+
+          <div class="p2-gallery-grid">
+
+            <!-- 01 Dataset Loader -->
+            <figure>
+              <div class="p2-fig-header">
+                <span style="font-family:var(--mono);font-size:9px;color:var(--accent);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;">01</span>
+                <span style="font-family:var(--mono);font-size:10px;color:var(--ink-soft);letter-spacing:0.06em;text-transform:uppercase;">Dataset &amp; Corpus Loader</span>
+              </div>
+              <div class="p2-img-wrap">
+                <img src="images/phase2/dataset_loader.png" alt="Dataset loader showing 113 Bengali matrimonial ads">
+              </div>
+              <figcaption class="p2-figcaption">JSON dataset loader with live preview. 113 OCR-processed advertisements from Anandabazar Patrika (1984&ndash;2024). Supports file upload or direct path loading.</figcaption>
+            </figure>
+
+            <!-- 02 Extraction Results -->
+            <figure>
+              <div class="p2-fig-header">
+                <span style="font-family:var(--mono);font-size:9px;color:var(--accent);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;">02</span>
+                <span style="font-family:var(--mono);font-size:10px;color:var(--ink-soft);letter-spacing:0.06em;text-transform:uppercase;">Hybrid NLP Extraction Results</span>
+              </div>
+              <div class="p2-img-wrap">
+                <img src="images/phase2/extraction_results.png" alt="Extraction results table with age caste height education">
+              </div>
+              <figcaption class="p2-figcaption">Rule-based patterns handle age, height, role, caste, and box number. Mistral LLM handles education, profession, and preferences. Structured JSON output per advertisement.</figcaption>
+            </figure>
+
+            <!-- 03 Knowledge Graph -->
+            <figure>
+              <div class="p2-fig-header">
+                <span style="font-family:var(--mono);font-size:9px;color:var(--green);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;">03</span>
+                <span style="font-family:var(--mono);font-size:10px;color:var(--ink-soft);letter-spacing:0.06em;text-transform:uppercase;">Interactive Knowledge Graph</span>
+              </div>
+              <div class="p2-img-wrap">
+                <img src="images/phase2/knowledge_graph.png" alt="Interactive pyvis knowledge graph with advertisement and person nodes">
+              </div>
+              <figcaption class="p2-figcaption">Instance-level knowledge graph via pyvis. Nodes colour-coded by OWL class; edges show object properties. OWL ontology downloadable as RDF/XML. Up to 25 advertisements visualised per session.</figcaption>
+            </figure>
+
+            <!-- 04 SPARQL Interface -->
+            <figure>
+              <div class="p2-fig-header">
+                <span style="font-family:var(--mono);font-size:9px;color:var(--green);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;">04</span>
+                <span style="font-family:var(--mono);font-size:10px;color:var(--ink-soft);letter-spacing:0.06em;text-transform:uppercase;">SPARQL Semantic Query Interface</span>
+              </div>
+              <div class="p2-img-wrap">
+                <img src="images/phase2/sparql_queries.png" alt="SPARQL editor with age distribution query results and bar chart">
+              </div>
+              <figcaption class="p2-figcaption">6 predefined SPARQL templates covering groom demographics, age distribution, caste preferences, and education. Live results table with auto-generated charts and CSV export.</figcaption>
+            </figure>
+
+            <!-- 05 End-to-End Pipeline Flowchart (SVG, same height as the others) -->
+            <figure>
+              <div class="p2-fig-header">
+                <span style="font-family:var(--mono);font-size:9px;color:var(--accent);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;">05</span>
+                <span style="font-family:var(--mono);font-size:10px;color:var(--ink-soft);letter-spacing:0.06em;text-transform:uppercase;">End-to-End Pipeline &mdash; Process Flowchart</span>
+              </div>
+              <div class="p2-img-wrap" style="background:var(--paper);padding:20px 16px;">
+                <svg viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                  <defs>
+                    <marker id="arrowhead" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                      <polygon points="0 0, 7 3.5, 0 7" fill="#8B8576"/>
+                    </marker>
+                  </defs>
+                  <!-- Row 1: Input → OCR → Extraction → JSON -->
+                  <!-- Box: Input -->
+                  <rect x="4" y="12" width="90" height="42" rx="2" fill="#F6F2E8" stroke="#1C1B19" stroke-width="1.2"/>
+                  <text x="49" y="28" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#A13D2B" font-weight="600" letter-spacing="1">INPUT</text>
+                  <text x="49" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">Raw Scans /</text>
+                  <text x="49" y="50" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">JSON Corpus</text>
+                  <!-- Arrow -->
+                  <line x1="94" y1="33" x2="106" y2="33" stroke="#8B8576" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+                  <!-- Box: Phase I -->
+                  <rect x="108" y="12" width="90" height="42" rx="2" fill="#F6F2E8" stroke="#1C1B19" stroke-width="1.2"/>
+                  <text x="153" y="28" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#A13D2B" font-weight="600" letter-spacing="1">PHASE I</text>
+                  <text x="153" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">OCR &amp; Layout</text>
+                  <text x="153" y="50" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">Annotation</text>
+                  <!-- Arrow -->
+                  <line x1="198" y1="33" x2="210" y2="33" stroke="#8B8576" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+                  <!-- Box: Extraction -->
+                  <rect x="212" y="12" width="90" height="42" rx="2" fill="#F6F2E8" stroke="#1C1B19" stroke-width="1.2"/>
+                  <text x="257" y="28" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#5B6B4E" font-weight="600" letter-spacing="1">EXTRACTION</text>
+                  <text x="257" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">Rule-based +</text>
+                  <text x="257" y="50" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">Mistral LLM</text>
+                  <!-- Arrow -->
+                  <line x1="302" y1="33" x2="314" y2="33" stroke="#8B8576" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+                  <!-- Box: Structured JSON -->
+                  <rect x="316" y="12" width="100" height="42" rx="2" fill="#F6F2E8" stroke="#1C1B19" stroke-width="1.2"/>
+                  <text x="366" y="28" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#5B6B4E" font-weight="600" letter-spacing="1">STRUCTURED</text>
+                  <text x="366" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">JSON per Ad</text>
+                  <text x="366" y="50" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">(per document)</text>
+
+                  <!-- Down arrow from JSON -->
+                  <line x1="366" y1="54" x2="366" y2="72" stroke="#8B8576" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+
+                  <!-- Row 2: Portal ← SPARQL ← KG ← OWL -->
+                  <!-- Box: OWL Ontology -->
+                  <rect x="316" y="74" width="100" height="42" rx="2" fill="#F6F2E8" stroke="#1C1B19" stroke-width="1.2"/>
+                  <text x="366" y="90" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#5B6B4E" font-weight="600" letter-spacing="1">OWL ONTOLOGY</text>
+                  <text x="366" y="102" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">6 Classes &middot; 3 Obj</text>
+                  <text x="366" y="112" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">Props &middot; 9 Data</text>
+                  <!-- Arrow (right to left) -->
+                  <line x1="314" y1="95" x2="302" y2="95" stroke="#8B8576" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+                  <!-- Box: Knowledge Graph -->
+                  <rect x="212" y="74" width="90" height="42" rx="2" fill="#F6F2E8" stroke="#1C1B19" stroke-width="1.2"/>
+                  <text x="257" y="90" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#5B6B4E" font-weight="600" letter-spacing="1">KNOWLEDGE</text>
+                  <text x="257" y="102" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">Graph (pyvis /</text>
+                  <text x="257" y="112" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">rdflib)</text>
+                  <!-- Arrow -->
+                  <line x1="210" y1="95" x2="198" y2="95" stroke="#8B8576" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+                  <!-- Box: SPARQL -->
+                  <rect x="108" y="74" width="90" height="42" rx="2" fill="#F6F2E8" stroke="#1C1B19" stroke-width="1.2"/>
+                  <text x="153" y="90" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#5B6B4E" font-weight="600" letter-spacing="1">SPARQL</text>
+                  <text x="153" y="102" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">Semantic Query</text>
+                  <text x="153" y="112" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">Engine</text>
+                  <!-- Arrow -->
+                  <line x1="106" y1="95" x2="94" y2="95" stroke="#8B8576" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+                  <!-- Box: Portal -->
+                  <rect x="4" y="74" width="90" height="42" rx="2" fill="#F6F2E8" stroke="#1C1B19" stroke-width="1.2"/>
+                  <text x="49" y="90" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#A13D2B" font-weight="600" letter-spacing="1">PORTAL</text>
+                  <text x="49" y="102" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">Streamlit UI</text>
+                  <text x="49" y="112" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">+ CSV Export</text>
+
+                  <!-- Down arrow from Portal -->
+                  <line x1="49" y1="116" x2="49" y2="133" stroke="#8B8576" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+
+                  <!-- Row 3: Outputs -->
+                  <rect x="4" y="135" width="140" height="40" rx="2" fill="#EDE7D9" stroke="#5B6B4E" stroke-width="1.5"/>
+                  <text x="74" y="151" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#5B6B4E" font-weight="600" letter-spacing="1">OUTPUT A</text>
+                  <text x="74" y="163" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">Annotated Dataset + OWL (RDF/XML)</text>
+
+                  <rect x="170" y="135" width="140" height="40" rx="2" fill="#EDE7D9" stroke="#5B6B4E" stroke-width="1.5"/>
+                  <text x="240" y="151" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#5B6B4E" font-weight="600" letter-spacing="1">OUTPUT B</text>
+                  <text x="240" y="163" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">SPARQL Results + Visualisations</text>
+
+                  <rect x="336" y="135" width="140" height="40" rx="2" fill="#EDE7D9" stroke="#5B6B4E" stroke-width="1.5"/>
+                  <text x="406" y="151" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#5B6B4E" font-weight="600" letter-spacing="1">OUTPUT C</text>
+                  <text x="406" y="163" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#423F38">Publications &amp; Open Portal</text>
+
+                  <!-- Connector lines from portal down to output A (already done above) -->
+                  <!-- Connector from portal area to output A -->
+                  <line x1="49" y1="134" x2="74" y2="134" stroke="#C9C2AC" stroke-width="1"/>
+                  <line x1="74" y1="134" x2="74" y2="135" stroke="#C9C2AC" stroke-width="1"/>
+                  <!-- Connector from SPARQL row to output B -->
+                  <line x1="153" y1="116" x2="153" y2="128" stroke="#C9C2AC" stroke-width="1"/>
+                  <line x1="153" y1="128" x2="240" y2="128" stroke="#C9C2AC" stroke-width="1"/>
+                  <line x1="240" y1="128" x2="240" y2="135" stroke="#C9C2AC" stroke-width="1"/>
+                  <!-- Connector from JSON/OWL to output C -->
+                  <line x1="366" y1="116" x2="366" y2="128" stroke="#C9C2AC" stroke-width="1"/>
+                  <line x1="366" y1="128" x2="406" y2="128" stroke="#C9C2AC" stroke-width="1"/>
+                  <line x1="406" y1="128" x2="406" y2="135" stroke="#C9C2AC" stroke-width="1"/>
+
+                  <!-- Legend -->
+                  <rect x="4" y="184" width="9" height="7" fill="#F6F2E8" stroke="#1C1B19" stroke-width="1"/>
+                  <text x="16" y="191" font-family="IBM Plex Mono,monospace" font-size="6.5" fill="#423F38">Pipeline stage</text>
+                  <rect x="104" y="184" width="9" height="7" fill="#EDE7D9" stroke="#5B6B4E" stroke-width="1.5"/>
+                  <text x="116" y="191" font-family="IBM Plex Mono,monospace" font-size="6.5" fill="#423F38">Output artefact</text>
+                  <line x1="210" y1="187" x2="228" y2="187" stroke="#8B8576" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+                  <text x="232" y="191" font-family="IBM Plex Mono,monospace" font-size="6.5" fill="#423F38">Data flow</text>
+                </svg>
+              </div>
+              <figcaption class="p2-figcaption">End-to-end pipeline: raw scans through OCR annotation, hybrid extraction, OWL ontology population, SPARQL querying, and three output artefacts — annotated dataset, query results with charts, and the open knowledge portal.</figcaption>
+            </figure>
+
+            <!-- 06 Ontology Diagram -->
+            <figure>
+              <div class="p2-fig-header">
+                <span style="font-family:var(--mono);font-size:9px;color:var(--accent);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;">06</span>
+                <span style="font-family:var(--mono);font-size:10px;color:var(--ink-soft);letter-spacing:0.06em;text-transform:uppercase;">OWL Ontology &mdash; Class Hierarchy &amp; Property Relationships</span>
+              </div>
+              <div class="p2-img-wrap">
+                <img src="images/phase2/ontology_diagram.png" alt="OWL ontology class hierarchy diagram">
+              </div>
+              <figcaption class="p2-figcaption">6 OWL classes (Thing, Advertisement, Person, Groom, Bride, Requirement) &middot; 3 object properties &middot; 9 data properties. Serialised as RDF/XML; queried via rdflib SPARQL engine. Diagram rendered with networkx and matplotlib.</figcaption>
+            </figure>
+
+          </div><!-- /p2-gallery-grid -->
+        </div>
+
+      </div>
+    </div><!-- /phase2 -->
+
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="sec-label">Deliverables</p>
+    <h2 class="sec-heading">Proposed outcomes</h2>
+    <p class="sec-intro">An integrated knowledge portal serves as the primary deliverable &mdash; an invaluable resource offering insights into cultural practices and transitions in Bengali wedding and marriage practices over time.</p>
+    <div class="deliverables-grid">
+      <div class="del-card"><div class="del-num">01</div><p class="del-title">Research Publications</p><p class="del-desc">Findings and insights disseminated through academic publications in reputable journals and presentations at conferences.</p></div>
+      <div class="del-card"><div class="del-num">02</div><p class="del-title">Conferences &amp; Workshops</p><p class="del-desc">Bringing together experts, scholars, and stakeholders in cultural studies, history, and digital humanities.</p></div>
+      <div class="del-card"><div class="del-num">03</div><p class="del-title">Open Knowledge Portal</p><p class="del-desc">An integrated, publicly accessible portal presenting the annotated corpus, ontology, and query interface for ongoing scholarly use.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="team">
+  <div class="wrap">
+    <p class="sec-label">Research Team</p>
+    <h2 class="sec-heading">Principal Investigators</h2>
+    <div class="pi-grid">
+      <div class="pi-card">
+        <img src="images/principal_investigators/mayurakshi.jpg" alt="Mayurakshi Chaudhuri" class="pi-photo" onerror="this.style.display='none'">
+        <p class="pi-name">Mayurakshi Chaudhuri</p>
+        <p class="pi-role">Principal Investigator</p>
+        <p class="pi-inst">Associate Professor of Sociology and Digital Humanities<br>FLAME University, Pune</p>
+      </div>
+      <div class="pi-card">
+        <img src="images/principal_investigators/shrimoyee.jpg" alt="Shrimoyee Guha Thakurta" class="pi-photo" onerror="this.style.display='none'">
+        <p class="pi-name">Shrimoyee Guha Thakurta <span style="font-style:italic;font-size:0.85em">(nee Basu)</span></p>
+        <p class="pi-role">Principal Investigator</p>
+        <p class="pi-inst">Associate Professor of History<br>Scottish Church College, Calcutta University</p>
+      </div>
+      <div class="pi-card">
+        <img src="images/principal_investigators/chiranjoy.jpg" alt="Chiranjoy Chattopadhyay" class="pi-photo" onerror="this.style.display='none'">
+        <p class="pi-name">Chiranjoy Chattopadhyay</p>
+        <p class="pi-role">Principal Investigator</p>
+        <p class="pi-inst">Associate Professor of Computer Science<br>FLAME University, Pune</p>
+      </div>
+    </div>
+
+    <h2 class="sec-heading" style="margin-top:56px;">Project Associates</h2>
+    <div class="pi-grid">
+      <div class="pi-card">
+        <img src="images/project_associates/amisha.jpeg" alt="Project Associate" class="pi-photo" onerror="this.style.display='none'">
+        <p class="pi-name">Amisha Mishra</p>
+        <p class="pi-role">Project Associate</p>
+        <p class="pi-inst">Research Associate<br>FLAME University, Pune</p>
+      </div>
+      <div class="pi-card">
+        <img src="images/project_associates/chaitri.jpg" alt="Chaitri Nair" class="pi-photo" onerror="this.style.display='none'">
+        <p class="pi-name">Chaitri Nair</p>
+        <p class="pi-role">Project Associate</p>
+        <p class="pi-inst">Alumni<br>FLAME University, Pune</p>
+      </div>
+      <div class="pi-card">
+        <img src="images/project_associates/saptarsha.png" alt="Project Associate" class="pi-photo" onerror="this.style.display='none'">
+        <p class="pi-name">Saptarsha</p>
+        <p class="pi-role">Project Associate</p>
+        <p class="pi-inst">PhD Student<br>Jawaharlal Nehru University, New Delhi</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contact">
+  <div class="wrap">
+    <p class="sec-label">Reach Out</p>
+    <h2 class="sec-heading">Get in touch</h2>
+    <p class="sec-intro">For questions, collaboration enquiries, or data-sharing requests related to the PORINOY project, please get in touch with the research team.</p>
+    <div class="contact-block">
+      <div class="contact-dot"></div>
+      <div>
+        <span class="contact-label">Email Address</span>
+        <a href="mailto:porinoy.project@gmail.com" class="contact-email">porinoy.project@gmail.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-row"><span>PORINOY &mdash; IIT Indore &middot; JP Narayan National Centre of Excellence in Humanities</span></div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+document.querySelectorAll('.era-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const era=btn.dataset.era;
+    document.querySelectorAll('.era-btn').forEach(b=>b.classList.toggle('active',b===btn));
+    document.querySelectorAll('.era-panel').forEach(p=>p.classList.toggle('active',p.dataset.era===era));
+  });
+});
+</script>
+</body>
+</html>
