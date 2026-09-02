@@ -1087,9 +1087,15 @@ with tab_p2:
                 st.success(f"Added as Ad #{nid}. Total: {len(st.session_state.raw_ads)}")
         if st.session_state.loaded and st.session_state.raw_ads:
             st.markdown(f'<br><span class="sub-label">Preview</span>', unsafe_allow_html=True)
+            # preview_rows=[{"ID":str(a.get("id",i+1)),"Text Preview":str(a.get("raw_text",""))[:90]+"…"}
+            #               for i,a in enumerate(st.session_state.raw_ads[:10])]
+            # st.markdown(render_html_table(preview_rows), unsafe_allow_html=True)
             preview_rows=[{"ID":str(a.get("id",i+1)),"Text Preview":str(a.get("raw_text",""))[:90]+"…"}
-                          for i,a in enumerate(st.session_state.raw_ads[:10])]
-            st.markdown(render_html_table(preview_rows), unsafe_allow_html=True)
+              for i,a in enumerate(st.session_state.raw_ads)]
+            st.markdown(
+                f'<div style="max-height:360px;overflow-y:auto;border:1px solid {RL};">'
+                + render_html_table(preview_rows) +
+                '</div>', unsafe_allow_html=True)
 
     with ri2:
         st.markdown('<br>', unsafe_allow_html=True)
@@ -1128,8 +1134,7 @@ with tab_p2:
             rows=[{"#":str(i+1),"Role":e['advertiser'].get('role','?'),
                    "Age":str(e['advertiser'].get('age','—')),"Height":str(e['advertiser'].get('height','—')),
                    "Caste":str(e['advertiser'].get('caste','—')),"Education":str(e['advertiser'].get('education','—')),
-                   "Profession":str(e['advertiser'].get('profession','—')),
-                   "Box":str(e['contact'].get('box_number','—'))} for i,e in enumerate(st.session_state.extractions)]
+                   "Profession":str(e['advertiser'].get('profession','—'))} for i,e in enumerate(st.session_state.extractions)]
             st.markdown(render_html_table(rows), unsafe_allow_html=True)
             st.markdown('<br>', unsafe_allow_html=True)
             st.download_button("Download extractions (JSON)",
