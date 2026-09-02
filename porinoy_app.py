@@ -479,7 +479,7 @@ def show_img(path, height=280, fit="cover", object_position="center top"):
             f'{os.path.basename(path)}</div>', unsafe_allow_html=True)
 
 # ── Backend ────────────────────────────────────────────────────────────────
-MISTRAL_API_KEY   = "MISTRAL_API_KEY"
+MISTRAL_API_KEY = st.secrets.get("MISTRAL_API_KEY", "")
 DEFAULT_JSON_PATH = os.path.join(APP_DIR, 'matrimonial_ads_cleaned.json')
 ONTOLOGY_IRI      = "http://matrimonial-nlp-research.org/ontology#"
 
