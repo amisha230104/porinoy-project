@@ -76,13 +76,25 @@ h1,h2,h3,h4
   letter-spacing:.12em;text-transform:uppercase;color:{IS}!important;}}
 .mh-nav{{font-family:'IBM Plex Mono',monospace!important;font-size:11px;
   letter-spacing:.08em;color:{IS}!important;}}
+.mh-nav a {{
+  color:{IS}!important;
+  text-decoration:none!important;
+  border-bottom:1px solid transparent;
+  transition:color 0.15s,border-color 0.15s;
+}}
+
+.mh-nav a:hover {{
+  color:{AC}!important;
+  border-bottom:1px solid {AC};
+}}
+
 
 /* ══ HERO ══ */
 .hero{{padding:64px 90px 56px; background:{P};width:100%;}}
 .kicker{{font-family:'IBM Plex Mono',monospace!important;font-size:11px;
   letter-spacing:.16em;text-transform:uppercase;color:{GR}!important;
   display:flex;align-items:center;gap:10px;margin-bottom:18px;}}
-.kicker::before{{content:"";width:22px;height:1px;background:{GR};display:inline-block;flex-shrink:0;}}
+.kicker::before{{content:"";width:22px;height:1px;background:{GR};display:none;flex-shrink:0;}}
 .h1{{font-family:'Source Serif 4',serif!important;font-weight:700;
   font-size:clamp(36px,5vw,62px);line-height:1.05;margin:0 0 6px;
   letter-spacing:-.01em;color:{INK}!important;}}
@@ -327,7 +339,9 @@ button[kind="primary"],button[kind="secondary"],
   padding:10px 20px!important;font-weight:600!important;
   min-width:160px!important;}}
 .stButton>button:hover,.stFormSubmitButton>button:hover
-{{background:{INK}!important;border-color:{INK}!important;}}
+{{background:{INK}!important;border-color:{INK}!important;color:{P}!important;}}
+.stButton>button:hover p,.stFormSubmitButton>button:hover p
+{{color:{P}!important;}}
 
 /* Download buttons */
 .stDownloadButton>button
@@ -382,7 +396,10 @@ button[kind="primary"],button[kind="secondary"],
 .stTextArea textarea
 {{background:{CA}!important;border:1px solid {RL}!important;
   border-radius:2px!important;font-family:'IBM Plex Mono',monospace!important;
-  font-size:12px!important;color:{INK}!important;}}
+  font-size:12px!important;color:{INK}!important;caret-color:{INK}!important;}}
+
+.stTextArea textarea::placeholder
+{{color:{INK}!important;opacity:1!important;}}
 
 /* PROGRESS BAR */
 .stProgress > div > div > div > div{{background:{AC}!important;}}
@@ -818,13 +835,27 @@ if "era" in qp: st.session_state.era = qp["era"]
 # ══════════════════════════════════════════════════════════════════════════════
 # MASTHEAD
 # ══════════════════════════════════════════════════════════════════════════════
+# st.markdown(f"""
+# <div class="masthead">
+#   <div class="masthead-inner">
+#     <span class="mh-brand">PORINOY</span>
+#     <span class="mh-nav">Methodology &nbsp;·&nbsp; Team &nbsp;·&nbsp; Contact</span>
+#   </div>
+# </div>""", unsafe_allow_html=True)
 st.markdown(f"""
 <div class="masthead">
   <div class="masthead-inner">
     <span class="mh-brand">PORINOY</span>
-    <span class="mh-nav">Methodology &nbsp;·&nbsp; Team &nbsp;·&nbsp; Contact</span>
+    <span class="mh-nav">
+      <a href="#methodology">Methodology</a>
+      &nbsp;·&nbsp;
+      <a href="#team">Team</a>
+      &nbsp;·&nbsp;
+      <a href="#contact">Contact</a>
+    </span>
   </div>
 </div>""", unsafe_allow_html=True)
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 # HERO — acronym letters via inline style only (no class dependence)
@@ -868,7 +899,7 @@ with st.container(key="obj_cards"):
 # ══════════════════════════════════════════════════════════════════════════════
 # METHODOLOGY
 # ══════════════════════════════════════════════════════════════════════════════
-st.markdown('<div class="sec"><div class="wrap">', unsafe_allow_html=True)
+st.markdown('<div id="methodology" class="sec"><div class="wrap">', unsafe_allow_html=True)
 st.markdown(f"""
 <span class="sec-label">Methodology</span>
 <h2 class="sec-heading">A two-phase approach</h2>
@@ -877,7 +908,7 @@ st.markdown(f"""
   <div class="phase-card">
     <p class="phase-tag">Phase I</p>
     <p class="phase-name">BANDHAN Dataset Creation</p>
-    <p class="phase-desc">Intensive archival research, collection of analogue and digital documents, OCR digitisation, and creation of <strong>BANDHAN</strong> - Bengali Advertisement Newspaper Dataset for Historical Analysis of Nuptials -
+    <p class="phase-desc">Intensive archival research, collection of analogue and digital documents, OCR digitisation, and creation of <em><strong>BANDHAN</strong> - Bengali Advertisement Newspaper Dataset for Historical Analysis of Nuptials</em> -
     spanning four decades (1984–2024).</p>
   </div>
   <div class="phase-card phase-card-2">
@@ -1003,7 +1034,7 @@ with tab_p2:
         st.markdown(f"""
 <table class="method-table">
   <tr><td>Age · Height · Role</td><td><span class="tag-rule">RULE</span></td></tr>
-  <tr><td>Caste · Box Number</td><td><span class="tag-rule">RULE</span></td></tr>
+  <tr><td>Caste</td><td><span class="tag-rule">RULE</span></td></tr>
   <tr><td>Education · Profession</td><td><span class="tag-llm">LLM</span></td></tr>
   <tr><td>Other preferences</td><td><span class="tag-llm">LLM</span></td></tr>
 </table>""", unsafe_allow_html=True)
@@ -1131,7 +1162,7 @@ with tab_p2:
      margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid {RL};">Method Key</p>
   <table class="method-table">
     <tr><td>Age · Height · Role</td><td><span class="tag-rule">RULE</span></td></tr>
-    <tr><td>Caste · Box Number</td><td><span class="tag-rule">RULE</span></td></tr>
+    <tr><td>Caste</td><td><span class="tag-rule">RULE</span></td></tr>
     <tr><td>Education · Profession</td><td><span class="tag-llm">LLM</span></td></tr>
     <tr><td>Other preferences</td><td><span class="tag-llm">LLM</span></td></tr>
   </table>
@@ -1279,7 +1310,8 @@ st.markdown('</div></div>', unsafe_allow_html=True)
 # ══════════════════════════════════════════════════════════════════════════════
 # TEAM
 # ══════════════════════════════════════════════════════════════════════════════
-st.markdown('<div class="sec"><div class="wrap">', unsafe_allow_html=True)
+# st.markdown('<div class="sec"><div class="wrap">', unsafe_allow_html=True)
+st.markdown('<div id="team" class="sec"><div class="wrap">', unsafe_allow_html=True)
 st.markdown('<span class="sec-label">Research Team</span><h2 class="sec-heading">Principal Investigators</h2>', unsafe_allow_html=True)
 pi_list=[
     ("images/principal_investigators/mayurakshi.jpg","Mayurakshi Chaudhuri"," ","Associate Professor of Sociology and Digital Humanities<br>FLAME University, Pune"),
