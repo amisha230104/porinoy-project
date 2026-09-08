@@ -1308,7 +1308,7 @@ st.markdown(f"""
   <div class="contact-dot"></div>
   <div>
     <span class="contact-label">Email Address</span>
-    <a href="mailto:porinoy.project@gmail.com" class="contact-email" style="text-decoration:none!important;">porinoy.project@gmail.com</a>
+    <a href="mailto:mayurakshi.chaudhuri@flame.edu.in" class="contact-email" style="text-decoration:none!important;">mayurakshi.chaudhuri@flame.edu.in</a>
   </div>
 </div>""", unsafe_allow_html=True)
 st.markdown('</div></div>', unsafe_allow_html=True)
