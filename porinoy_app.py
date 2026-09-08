@@ -876,8 +876,9 @@ st.markdown(f"""
 <div class="phase-row">
   <div class="phase-card">
     <p class="phase-tag">Phase I</p>
-    <p class="phase-name">Dataset Creation</p>
-    <p class="phase-desc">Intensive archival research, collection of analogue and digital documents, OCR digitisation, and creation of a comprehensive annotated dataset of Bengali matrimonial advertisements spanning four decades (1984–2024).</p>
+    <p class="phase-name">BANDHAN Dataset Creation</p>
+    <p class="phase-desc">Intensive archival research, collection of analogue and digital documents, OCR digitisation, and creation of <strong>BANDHAN</strong> - Bengali Advertisement Newspaper Dataset for Historical Analysis of Nuptials -
+    spanning four decades (1984–2024).</p>
   </div>
   <div class="phase-card phase-card-2">
     <p class="phase-tag phase-tag-2">Phase II</p>
