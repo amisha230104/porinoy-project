@@ -350,6 +350,16 @@ button[kind="primary"],button[kind="secondary"],
 .stDownloadButton>button:hover
 {{background:{INK}!important;color:{P}!important;}}
 
+.st-key-dl_diagram_png .stDownloadButton>button
+{{color:{P}!important;background:{INK}!important;border-color:{INK}!important;}}
+.st-key-dl_diagram_png .stDownloadButton>button p
+{{color:{P}!important;}}
+
+.st-key-dl_owl_file .stDownloadButton>button
+{{color:{P}!important;background:{INK}!important;border-color:{INK}!important;}}
+.st-key-dl_owl_file .stDownloadButton>button p
+{{color:{P}!important;}}
+
 /* FILE UPLOADER */
 [data-testid="stFileUploader"],
 [data-testid="stFileUploaderDropzone"],
@@ -1220,7 +1230,7 @@ with tab_p2:
                     st.markdown(f'<div style="font-family:IBM Plex Mono,monospace;font-size:11px;color:{GR};margin-bottom:10px;">● OWL ready</div>', unsafe_allow_html=True)
                     with open(st.session_state.owl_path,'rb') as f:
                         st.download_button("Download .owl",data=f,
-                                           file_name="matrimonial_ontology.owl",mime="application/rdf+xml")
+                                           file_name="matrimonial_ontology.owl",mime="application/rdf+xml",key="dl_owl_file")
             with kg1:
                 kgt1,kgt2=st.tabs(["Interactive Graph","Ontology Hierarchy"])
                 with kgt1:
@@ -1235,7 +1245,7 @@ with tab_p2:
                             fig=ontology_fig(st.session_state.extractions)
                             st.pyplot(fig,use_container_width=True)
                             buf=io.BytesIO(); fig.savefig(buf,format='png',dpi=180,bbox_inches='tight',facecolor=CA); buf.seek(0)
-                            st.download_button("Download diagram (PNG)",data=buf,file_name="ontology_diagram.png",mime="image/png")
+                            st.download_button("Download diagram (PNG)",data=buf,file_name="ontology_diagram.png",mime="image/png",key="dl_diagram_png")
                         except Exception as ex: st.error(f"Diagram error: {ex}")
                     else:
                         st.info("Build ontology first using the button →")
