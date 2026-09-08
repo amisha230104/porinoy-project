@@ -1068,7 +1068,6 @@ with tab_p2:
                 st.markdown(
                     f'<div style="font-family:IBM Plex Mono,monospace;font-size:11px;'
                     f'color:{IS};margin-bottom:10px;">'
-                    f'<strong>BANDHAN</strong> — Bengali Advertisement Analysis of Nuptials'
                     f'</div>',
                     unsafe_allow_html=True
                 )
