@@ -1062,9 +1062,16 @@ with tab_p2:
         st.markdown(f'<span class="sub-label">Data Sources</span>', unsafe_allow_html=True)
         dl,dr=st.columns(2,gap="large")
         with dl:
-            st.markdown(f'<p style="font-size:14px;color:{IS};margin-bottom:12px;">Load annotated dataset</p>', unsafe_allow_html=True)
+            # st.markdown(f'<p style="font-size:14px;color:{IS};margin-bottom:12px;">Load annotated dataset</p>', unsafe_allow_html=True)
             if os.path.exists(DEFAULT_JSON_PATH):
-                st.markdown(f'<div style="font-family:IBM Plex Mono,monospace;font-size:11px;color:{IS};margin-bottom:10px;">{DEFAULT_JSON_PATH}</div>', unsafe_allow_html=True)
+                # st.markdown(f'<div style="font-family:IBM Plex Mono,monospace;font-size:11px;color:{IS};margin-bottom:10px;">{DEFAULT_JSON_PATH}</div>', unsafe_allow_html=True)
+                st.markdown(
+                    f'<div style="font-family:IBM Plex Mono,monospace;font-size:11px;'
+                    f'color:{IS};margin-bottom:10px;">'
+                    f'<strong>BANDHAN</strong> — Bengali Advertisement Analysis of Nuptials'
+                    f'</div>',
+                    unsafe_allow_html=True
+                )
                 if st.button("Load Cleaned Dataset"):
                     with open(DEFAULT_JSON_PATH,'r',encoding='utf-8') as f: ads=json.load(f)
                     st.session_state.raw_ads=ads; st.session_state.loaded=True
